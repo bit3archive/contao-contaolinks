@@ -30,14 +30,14 @@
 
 
 /**
- * Class contaolib
+ * Class ContaoLinksLib
  * 
- * Basic methods for the TinyMCE plugin.
+ * 
  * @copyright  Tristan Lins 2011
  * @author     Tristan Lins <http://www.infinitysoft.de>
  * @package    Controller
  */
-class contaolib extends Backend
+class ContaoLinksLib extends Backend
 {
 
 	/**
@@ -52,8 +52,8 @@ class contaolib extends Backend
 	{
 		$this->import('BackendUser', 'User');
 		parent::__construct();
-
 		$this->User->authenticate();
+		$this->loadLanguageFile('contaolinks');
 	}
 
 

@@ -35,7 +35,7 @@
 define('TL_MODE', 'FE');
 require('../../../../../system/initialize.php');
 
-class MifTreeCss extends Controller
+class ContaoLinksCss extends Controller
 {
 	public function __construct()
 	{
@@ -49,9 +49,10 @@ class MifTreeCss extends Controller
 	}
 
 
-	public function output()
+	public function run()
 	{
 		header('Content-Type: text/css');
+		
 		?>
 .mif-tree-wrapper {
 	position: absolute;
@@ -363,7 +364,7 @@ class MifTreeCss extends Controller
 	}
 }
 
-$objMifTreeCss = new MifTreeCss();
-$objMifTreeCss->output();
+$objContaoLinksCss = new ContaoLinksCss();
+$objContaoLinksCss->run();
 
 ?>

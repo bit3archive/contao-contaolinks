@@ -33,46 +33,58 @@
  * Initialize system
  */
 define('TL_MODE', 'FE');
-require('../../../../system/initialize.php');
+require('../../initialize.php');
 
 
 /**
- * Include library class
+ * Class contaolinks
  */
-require('contaolib.php');
-
-
-/**
- * Generate page
- */
-header('Content-Type: text/html; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
-$objLib = new contaolib();
-
-?>
+class ContaoLinks extends ContaoLinksLib
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('Input');
+	}
+	
+	
+	public function run()
+	{
+		/**
+		 * Generate page
+		 */
+		header('Content-Type: text/html; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
+		$this->import('ContaoLinksLib');
+		
+		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{#contaolinks_dlg.link_title}</title>
+	<title><?php echo $GLOBALS['TL_LANG']['contaolinks']['title']; ?></title>
+	<?php /*
 	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script type="text/javascript" src="../../utils/mctabs.js"></script>
 	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
 	<script type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script type="text/javascript" src="../../utils/validate.js"></script>
-	<script type="text/javascript" src="../../../mootools/mootools-core.js"></script>
-	<script type="text/javascript" src="../../../mootools/mootools-more.js"></script>
-	<script type="text/javascript" src="../../../Mif.Tree/mif.tree.js"></script>
-	<script type="text/javascript" src="js/contaolinks.js"></script>
-	<link type="text/css" rel="stylesheet" href="css/mif.tree.php" />
+	*/ ?>
+	<script type="text/javascript" src="../../../plugins/mootools/mootools-core.js"></script>
+	<script type="text/javascript" src="../../../plugins/mootools/mootools-more.js"></script>
+	<script type="text/javascript" src="../../../plugins/Mif.Tree/mif.tree.js"></script>
+	<script type="text/javascript" src="html/contaolinks.js"></script>
+	<link type="text/css" rel="stylesheet" href="html/contaolinks.css.php" />
+	<link type="text/css" rel="stylesheet" href="../../themes/<?php echo $this->getTheme(); ?>/basic.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
+	<link type="text/css" rel="stylesheet" href="../../themes/<?php echo $this->getTheme(); ?>/main.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
 </head>
 <body id="link" style="display: none">
 <form onsubmit="LinkDialog.update();return false;" action="#">
 	<div class="tabs">
 		<ul>
-			<li id="page_tab" class="current"><span><a href="javascript:mcTabs.displayTab('page_tab','page_panel');" onmousedown="return false;">{#contaolinks_dlg.page_title}</a></span></li>
-			<li id="file_tab"><span><a href="javascript:mcTabs.displayTab('file_tab','file_panel');" onmousedown="return false;">{#contaolinks_dlg.file_title}</a></span></li>
-			<li id="email_tab"><span><a href="javascript:mcTabs.displayTab('email_tab','email_panel');" onmousedown="return false;">{#contaolinks_dlg.email_title}</a></span></li>
-			<li id="phone_tab"><span><a href="javascript:mcTabs.displayTab('phone_tab','phone_panel');" onmousedown="return false;">{#contaolinks_dlg.phone_title}</a></span></li>
-			<li id="url_tab"><span><a href="javascript:mcTabs.displayTab('url_tab','url_panel');" onmousedown="return false;">{#contaolinks_dlg.url_title}</a></span></li>
+			<li id="page_tab" class="current"><span><a href="javascript:mcTabs.displayTab('page_tab','page_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['page']; ?></a></span></li>
+			<li id="file_tab"><span><a href="javascript:mcTabs.displayTab('file_tab','file_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['file']; ?></a></span></li>
+			<li id="email_tab"><span><a href="javascript:mcTabs.displayTab('email_tab','email_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['email']; ?></a></span></li>
+			<li id="phone_tab"><span><a href="javascript:mcTabs.displayTab('phone_tab','phone_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['phone']; ?></a></span></li>
+			<li id="url_tab"><span><a href="javascript:mcTabs.displayTab('url_tab','url_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['url']; ?></a></span></li>
 		</ul>
 	</div>
 
@@ -148,3 +160,11 @@ $objLib = new contaolib();
 </form>
 </body>
 </html>
+		<?php	
+	}
+}
+
+$objContaoLinks = new ContaoLinks();
+$objContaoLinks->run();
+
+?>
