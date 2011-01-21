@@ -39,7 +39,7 @@ require('../../initialize.php');
 /**
  * Class contaolinks
  */
-class ContaoPages extends ContaoLinksLib
+class ContaoFiles extends ContaoLinksLib
 {
 	public function __construct()
 	{
@@ -194,7 +194,7 @@ class ContaoPages extends ContaoLinksLib
 	}
 }
 
-$objContaoPages = new ContaoPages();
-$objContaoPages->run();
+$objContaoFiles = new ContaoFiles();
+$objContaoFiles->run();
 
 ?>

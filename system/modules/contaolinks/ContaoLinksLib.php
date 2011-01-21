@@ -57,119 +57,15 @@ class ContaoLinksLib extends Backend
 	}
 
 
-	public function createPageList()
+	/**
+	 * Get the url of a theme icon.
+	 * 
+	 * @param string $strIcon
+	 * return string
+	 */
+	public function getIconSrc($strIcon)
 	{
-		$intPid = $this->Input->get('pid');
-		if (!$intPid)
-		{
-			$intPid = '0';
-		}
-		$arrOpen = array();
-		$intSelected = $this->Input->get('selectedPage');
-		if ($intSelected > 0)
-		{
-			$arrOpen = $this->calculateSelectedTrail($intSelected);
-		}
-
-		return json_encode($this->getPageList($intPid, $intSelected, $arrOpen));
-	}
-
-
-	public function getPageList($intPid, $intSelected, $arrOpen)
-	{
-		if ($this->User->isAdmin)
-		{
-			$objPage = $this->Database->prepare("SELECT * FROM tl_page WHERE pid=? AND type IN ('regular','forward','redirect','root') ORDER BY sorting")->execute($intPid);
-		}
-		else
-		{
-			// TODO
-		}
-
-		$arrPages = array();
-		while ($objPage->next())
-		{
-			$arrPage = array
-			(
-				'property' => array
-				(
-					'pageId' => $objPage->id,
-					'name' => $objPage->title,
-					'loadable' => $this->hasPageChilds($objPage->id)
-				),
-				'type' => $this->getPageType($objPage),
-				'state' => array()
-			);
-			if ($objPage->id == $intSelected)
-			{
-				$arrPage['state']['selected'] = true;
-			}
-			else if (in_array($objPage->id, $arrOpen))
-			{
-				$arrPage['children'] = $this->getPageList($objPage->id, $intSelected, $arrOpen);
-				$arrPage['state']['open'] = true;
-			}
-			$arrPages[] = $arrPage;
-		}
-		return $arrPages;
-	}
-
-
-	public function calculateSelectedTrail($intSelected)
-	{
-		$arrTrail = array();
-		
-		$intPid = $intSelected;
-		do
-		{
-			$objPage = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")->execute($intPid);
-			if ($objPage->next())
-			{
-				$arrTrail[] = $objPage->id;
-				$intPid = $objPage->pid;
-			}
-			else
-			{
-				break;
-			}
-		}
-		while ($intPid > 0);
-
-		return array_reverse($arrTrail);
-	}
-
-
-	protected function hasPageChilds($intId)
-	{
-		$objPage = $this->Database->prepare("SELECT COUNT(*) as c FROM tl_page WHERE pid=? AND type IN ('regular','forward','redirect','root')")->execute($intId);
-		return $objPage->c > 0;
-	}
-
-
-	protected function getPageType($objPage)
-	{
-		$sub = 0;
-
-		// Page not published or not active
-		if ((!$objPage->published || $objPage->start && $objPage->start > time() || $objPage->stop && $objPage->stop < time()))
-		{
-			$sub += 1;
-		}
-
-		// Page hidden from menu
-		if ($objPage->hide && !in_array($objPage->type, array('redirect', 'forward', 'root', 'error_403', 'error_404')))
-		{
-			$sub += 2;
-		}
-
-		// Page protected
-		if ($objPage->protected && !in_array($objPage->type, array('root', 'error_403', 'error_404')))
-		{
-			$sub += 4;
-		}
-
-		// Get image name
-		return $objPage->type.'_'.$sub;
+		return sprintf('system/themes/%s/images/%s.gif', $this->getTheme(), $strIcon);
 	}
 
 

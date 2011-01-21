@@ -60,104 +60,148 @@ class ContaoLinks extends ContaoLinksLib
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<base href="<?php echo $this->Environment->base; ?>"></base>
 	<title><?php echo $GLOBALS['TL_LANG']['contaolinks']['title']; ?></title>
 	<?php /*
 	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script type="text/javascript" src="../../utils/mctabs.js"></script>
 	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
 	<script type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script type="text/javascript" src="../../utils/validate.js"></script>
 	*/ ?>
-	<script type="text/javascript" src="../../../plugins/mootools/mootools-core.js"></script>
-	<script type="text/javascript" src="../../../plugins/mootools/mootools-more.js"></script>
-	<script type="text/javascript" src="../../../plugins/Mif.Tree/mif.tree.js"></script>
-	<script type="text/javascript" src="html/contaolinks.js"></script>
-	<link type="text/css" rel="stylesheet" href="html/contaolinks.css.php" />
-	<link type="text/css" rel="stylesheet" href="../../themes/<?php echo $this->getTheme(); ?>/basic.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
-	<link type="text/css" rel="stylesheet" href="../../themes/<?php echo $this->getTheme(); ?>/main.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
+	<script type="text/javascript" src="plugins/mootools/mootools-core.js"></script>
+	<script type="text/javascript" src="plugins/mootools/mootools-more.js"></script>
+	<script type="text/javascript" src="plugins/Mif.Tree/mif.tree.js"></script>
+	<script type="text/javascript" src="system/modules/contaolinks/html/contaolinks.js"></script>
+	<?php if ($this->Input->get('tinymce')): ?>
+	<script type="text/javascript" src="system/modules/contaolinks/html/contaolinks.js"></script>
+	<?php endif; ?>
+	<link type="text/css" rel="stylesheet" href="system/modules/contaolinks/html/contaolinks.css.php" />
+	<link type="text/css" rel="stylesheet" href="system/themes/<?php echo $this->getTheme(); ?>/basic.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
+	<link type="text/css" rel="stylesheet" href="system/themes/<?php echo $this->getTheme(); ?>/main.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
+	<link type="text/css" rel="stylesheet" href="system/themes/<?php echo $this->getTheme(); ?>/be27.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
 </head>
-<body id="link" style="display: none">
-<form onsubmit="LinkDialog.update();return false;" action="#">
-	<div class="tabs">
-		<ul>
-			<li id="page_tab" class="current"><span><a href="javascript:mcTabs.displayTab('page_tab','page_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['page']; ?></a></span></li>
-			<li id="file_tab"><span><a href="javascript:mcTabs.displayTab('file_tab','file_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['file']; ?></a></span></li>
-			<li id="email_tab"><span><a href="javascript:mcTabs.displayTab('email_tab','email_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['email']; ?></a></span></li>
-			<li id="phone_tab"><span><a href="javascript:mcTabs.displayTab('phone_tab','phone_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['phone']; ?></a></span></li>
-			<li id="url_tab"><span><a href="javascript:mcTabs.displayTab('url_tab','url_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['url']; ?></a></span></li>
-		</ul>
-	</div>
-
-	<div class="panel_wrapper" style="height:252px;">
-		<div id="page_panel" class="panel current" style="height: 252px; position: relative;">
-			<div id="pageTree"></div>
-		</div>
-		<div id="file_panel" class="panel">
-			<div id="fileTree"></div>
-		</div>
-		<div id="email_panel" class="panel">
-			<table border="0" cellpadding="4" cellspacing="0" width="100%">
-				<tr>
-					<td class="nowrap"><label for="email">{#contaolinks_dlg.email}</label></td>
-				</tr>
-				<tr>
-					<td><input id="email" name="email" type="text" value="" style="width: 99%" /></td>
-				</tr>
-				<tr>
-					<td>{#contaolinks_dlg.email_desc}</td>
-				</tr>
-			</table>
-		</div>
-		<div id="phone_panel" class="panel">
-			<table border="0" cellpadding="4" cellspacing="0" width="100%">
-				<tr>
-					<td class="nowrap"><label for="phone">{#contaolinks_dlg.phone}</label></td>
-				</tr>
-				<tr>
-					<td><input id="phone" name="phone" type="text" value="" style="width: 99%" onkeyup="clearTimeout(this.timeout); var self = this; this.timeout = setTimeout(function(){ self.value = self.value.replace(/[^+\-\d]/g, ''); }, 250);" /></td>
-				</tr>
-				<tr>
-					<td>{#contaolinks_dlg.phone_desc}</td>
-				</tr>
-			</table>
-		</div>
-		<div id="url_panel" class="panel">
-			<table border="0" cellpadding="4" cellspacing="0" width="100%">
-				<tr>
-					<td class="nowrap"><label for="url">{#contaolinks_dlg.url}</label></td>
-				</tr>
-				<tr>
-					<td><input id="url" name="url" type="text" value="" style="width: 99%" /></td>
-				</tr>
-				<tr>
-					<td>{#contaolinks_dlg.url_desc}</td>
-				</tr>
-			</table>
+<body id="contaolinks">
+	<div id="left">
+		<div id="tl_navigation">
+			<div id="tab_wrapper">
+				<h1><?php echo $GLOBALS['TL_LANG']['contaolinks']['link']; ?></h1>
+				<ul class="tl_level_1">
+					<li class="tl_level_1_group">
+						<span><?php echo $GLOBALS['TL_LANG']['contaolinks']['internal']; ?></span>
+						<ul class="tl_level_2">
+							<li id="page_tab" class="page current"><a class="navigation page" href="javascript:displayTab('page_tab','page_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['page_legend'][0]; ?></a></li>
+							<li id="file_tab" class="file"><a class="navigation files" href="javascript:displayTab('file_tab','file_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['file_legend'][0]; ?></a></li>
+						</ul>
+					</li>
+					<li class="tl_level_1_group">
+						<span><?php echo $GLOBALS['TL_LANG']['contaolinks']['communication']; ?></span>
+						<ul class="tl_level_2">
+							<li id="email_tab" class="email"><a class="navigation email" href="javascript:displayTab('email_tab','email_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['email_legend'][0]; ?></a></li>
+							<li id="phone_tab" class="phone"><a class="navigation phone" href="javascript:displayTab('phone_tab','phone_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['phone_legend'][0]; ?></a></li>
+						</ul>
+					</li>
+					<li class="tl_level_1_group">
+						<span><?php echo $GLOBALS['TL_LANG']['contaolinks']['external']; ?></span>
+						<ul class="tl_level_2">
+							<li id="url_tab" class="url"><a class="navigation url" href="javascript:displayTab('url_tab','url_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['url_legend'][0]; ?></a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-
-	<div class="panel_wrapper" style="height:50px; margin-top: 2px;">
-		<table border="0" cellpadding="4" cellspacing="0">
-			<tr>
-				<td class="nowrap"><label for="linktitle">{#contaolinks_dlg.link_titlefield}</label></td>
-				<td><input id="linktitle" name="linktitle" type="text" value="" style="width: 200px" /></td>
-				<td><label id="targetlistlabel" for="target_list">{#contaolinks_dlg.link_target}</label></td>
-				<td><select id="target_list" name="target_list" style="width: 200px"></select></td>
-			</tr>
-			<tr>
-				<td><label id="rellistlabel" for="rel_list">{#contaolinks_dlg.image_rel}</label></td>
-				<td><select id="rel_list" name="rel_list" class="mceEditableSelect" style="width: 200px"></select></td>
-				<td><label for="class_list">{#class_name}</label></td>
-				<td><select id="class_list" name="class_list" class="mceEditableSelect" style="width: 200px"></select></td>
-			</tr>
-		</table>
+	
+	<div id="main">
+		<form onsubmit="update();return false;" action="#" id="form">
+			<div id="tl_formbody">
+				<div id="panel_wrapper">
+					<div id="page_panel" class="panel current">
+						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['page_legend'][1]; ?></h1>
+						<div class="tl_formbody_edit">
+							<div id="pageTree"></div>
+						</div>
+					</div>
+					<div id="file_panel" class="panel">
+						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['file_legend'][1]; ?></h1>
+						<div class="tl_formbody_edit">
+							<div id="fileTree"></div>
+						</div>
+					</div>
+					<div id="email_panel" class="panel">
+						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['email_legend'][1]; ?></h1>
+						<div class="tl_formbody_edit">
+							<fieldset class="tl_tbox">
+								<div>
+									<h3><label for="email"><?php echo $GLOBALS['TL_LANG']['contaolinks']['email'][0]; ?></label></h3>
+									<input id="email" name="email" type="text" value="" style="width: 99%" />
+									<p class="tl_help tl_tip"><?php echo $GLOBALS['TL_LANG']['contaolinks']['email'][1]; ?></p>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+					<div id="phone_panel" class="panel">
+						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['phone_legend'][1]; ?></h1>
+						<div class="tl_formbody_edit">
+							<fieldset class="tl_tbox">
+								<div>
+									<h3><label for="phone"><?php echo $GLOBALS['TL_LANG']['contaolinks']['phone'][0]; ?></label></h3>
+									<input id="phone" name="phone" type="text" value="" style="width: 99%" onkeyup="clearTimeout(this.timeout); var self = this; this.timeout = setTimeout(function(){ self.value = self.value.replace(/[^+\-\d\.]/g, ''); }, 250);" />
+									<p class="tl_help tl_tip"><?php echo $GLOBALS['TL_LANG']['contaolinks']['phone'][1]; ?></p>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+					<div id="url_panel" class="panel">
+						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['url_legend'][1]; ?></h1>
+						<div class="tl_formbody_edit">
+							<fieldset class="tl_tbox">
+								<div>
+									<h3><label for="url"><?php echo $GLOBALS['TL_LANG']['contaolinks']['url'][0]; ?></label></h3>
+									<input id="url" name="url" type="text" value="" style="width: 99%" />
+									<p class="tl_help tl_tip"><?php echo $GLOBALS['TL_LANG']['contaolinks']['url'][1]; ?></p>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				
+				<div id="attributes_wrapper">
+					<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['attributes']; ?></h1>
+					<div class="tl_formbody_edit">
+						<table border="0" cellpadding="4" cellspacing="0">
+							<tr>
+								<td class="nowrap"><label for="linktitle"><?php echo $GLOBALS['TL_LANG']['contaolinks']['title']; ?></label></td>
+								<td><input id="linktitle" name="linktitle" type="text" value="" style="width: 200px" /></td>
+								<td><label id="targetlistlabel" for="target_list"><?php echo $GLOBALS['TL_LANG']['contaolinks']['target']; ?></label></td>
+								<td><select id="target_list" name="target_list" style="width: 200px">
+									<option value=""><?php echo $GLOBALS['TL_LANG']['contaolinks']['not_set']; ?></option>
+									<option value="_blank"><?php echo $GLOBALS['TL_LANG']['contaolinks']['_blank']; ?></option>
+								</select></td>
+							</tr>
+							<tr>
+								<td><label id="rellistlabel" for="rel_list"><?php echo $GLOBALS['TL_LANG']['contaolinks']['rel']; ?></label></td>
+								<td><select id="rel_list" name="rel_list" class="mceEditableSelect" style="width: 200px">
+									<option value=""><?php echo $GLOBALS['TL_LANG']['contaolinks']['not_set']; ?></option>
+									<option value="lightbox"><?php echo $GLOBALS['TL_LANG']['contaolinks']['lightbox']; ?></option>
+									<option value="lightbox[multi]"><?php echo $GLOBALS['TL_LANG']['contaolinks']['gallery']; ?></option>
+								</select></td>
+								<td><label for="class_list"><?php echo $GLOBALS['TL_LANG']['contaolinks']['class']; ?></label></td>
+								<td><select id="class_list" name="class_list" class="mceEditableSelect" style="width: 200px">
+								</select></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			<div class="tl_formbody_submit">
+				<div class="tl_submit_container">
+					<input type="submit" name="save" id="save" class="tl_submit" accesskey="s" value="<?php echo specialchars($GLOBALS['TL_LANG']['contaolinks']['save']); ?>" />
+					<input type="submit" name="cancel" id="cancel" class="tl_submit" accesskey="c" value="<?php echo specialchars($GLOBALS['TL_LANG']['contaolinks']['cancel']); ?>" />
+				</div>
+			</div>
+		</form>
 	</div>
-
-	<div class="mceActionPanel">
-		<input type="submit" id="insert" name="insert" value="{#insert}" />
-		<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
-	</div>
-</form>
 </body>
 </html>
 		<?php	

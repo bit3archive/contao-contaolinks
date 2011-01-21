@@ -33,19 +33,13 @@
  * Initialize system
  */
 define('TL_MODE', 'FE');
-require('../../../../../system/initialize.php');
+require('../../../initialize.php');
 
-class ContaoLinksCss extends Controller
+class ContaoLinksCss extends ContaoLinksLib
 {
 	public function __construct()
 	{
 		parent::__construct();
-	}
-
-
-	public function icon($strIcon)
-	{
-		return sprintf('../../../../../system/themes/%s/images/%s.gif', $this->getTheme(), $strIcon);
 	}
 
 
@@ -54,13 +48,60 @@ class ContaoLinksCss extends Controller
 		header('Content-Type: text/css');
 		
 		?>
-.mif-tree-wrapper {
+body#contaolinks {
+	padding: 6px;
+}
+#tl_navigation ul,
+#tl_navigation li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#tl_navigation li span {
+	padding-left: 18px;
+}
+#tl_navigation li.current a {
+	font-weight: bold;
+}
+
+a.navigation.phone {
+	background-image: url(phone.png);
+}
+a.navigation.email {
+	background-image: url(email.png);
+}
+a.navigation.url {
+	background-image: url(url.png);
+}
+
+#tl_formbody {
+	position: relative;
+	padding-bottom: 20px;
+}
+#attributes_wrapper {
 	position: absolute;
+	bottom: 0;
+	left: 0;
 	width: 100%;
-	height:100%;
-	margin:0;
-	padding:0;
-	overflow:auto;
+}
+#attributes_wrapper h1.main_headline {
+	cursor: pointer;
+}
+
+#panel_wrapper .tl_formbody_edit {
+	height: 250px;
+	position: relative;
+	overflow: auto;
+}
+#panel_wrapper .panel {
+	display: none;
+}
+#panel_wrapper .panel.current {
+	display: block;
+}
+
+.mif-tree-wrapper {
+	padding: 18px 0;
 	font-family:sans-serif;
 	font-size:11px;
 	line-height:18px;/******Tree node height******/
@@ -128,10 +169,10 @@ class ContaoLinksCss extends Controller
 	background: none;
 }
 .mif-tree-gadjet-minus {
-	background-image: url('<?php echo $this->icon('folMinus'); ?>');
+	background-image: url('../../../../<?php echo $this->getIconSrc('folMinus'); ?>');
 }
 .mif-tree-gadjet-plus {
-	background-image: url('<?php echo $this->icon('folPlus'); ?>');
+	background-image: url('../../../../<?php echo $this->getIconSrc('folPlus'); ?>');
 }
 
 
@@ -144,102 +185,102 @@ class ContaoLinksCss extends Controller
 }
 
 .mif-tree-folder-open-icon{
-	background-image:url('<?php echo $this->icon('folderO'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('folderO'); ?>')
 }
 .mif-tree-folder-close-icon{
-	background-image:url('<?php echo $this->icon('folderC'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('folderC'); ?>')
 }
 
 .mif-tree-regular-icon {
-	background-image:url('<?php echo $this->icon('regular'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular'); ?>')
 }
 .mif-tree-regular-unpublished-icon {
-	background-image:url('<?php echo $this->icon('regular_1'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular_1'); ?>')
 }
 .mif-tree-regular-hidden-icon {
-	background-image:url('<?php echo $this->icon('regular_2'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular_2'); ?>')
 }
 .mif-tree-regular-unpublished-hidden-icon {
-	background-image:url('<?php echo $this->icon('regular_3'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular_3'); ?>')
 }
 .mif-tree-regular-protected-icon {
-	background-image:url('<?php echo $this->icon('regular_4'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular_4'); ?>')
 }
 .mif-tree-regular-unpublished-protected-icon {
-	background-image:url('<?php echo $this->icon('regular_5'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular_5'); ?>')
 }
 .mif-tree-regular-unpublished-hidden-protected {
-	background-image:url('<?php echo $this->icon('regular_6'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('regular_6'); ?>')
 }
 
 .mif-tree-forward-icon {
-	background-image:url('<?php echo $this->icon('forward'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward'); ?>')
 }
 .mif-tree-forward-unpublished-icon {
-	background-image:url('<?php echo $this->icon('forward_1'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward_1'); ?>')
 }
 .mif-tree-forward-hidden-icon {
-	background-image:url('<?php echo $this->icon('forward_2'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward_2'); ?>')
 }
 .mif-tree-forward-unpublished-hidden-icon {
-	background-image:url('<?php echo $this->icon('forward_3'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward_3'); ?>')
 }
 .mif-tree-forward-protected-icon {
-	background-image:url('<?php echo $this->icon('forward_4'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward_4'); ?>')
 }
 .mif-tree-forward-unpublished-protected-icon {
-	background-image:url('<?php echo $this->icon('forward_5'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward_5'); ?>')
 }
 .mif-tree-forward-unpublished-hidden-protected {
-	background-image:url('<?php echo $this->icon('forward_6'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('forward_6'); ?>')
 }
 
 .mif-tree-redirect-icon {
-	background-image:url('<?php echo $this->icon('redirect'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect'); ?>')
 }
 .mif-tree-redirect-unpublished-icon {
-	background-image:url('<?php echo $this->icon('redirect_1'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect_1'); ?>')
 }
 .mif-tree-redirect-hidden-icon {
-	background-image:url('<?php echo $this->icon('redirect_2'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect_2'); ?>')
 }
 .mif-tree-redirect-unpublished-hidden-icon {
-	background-image:url('<?php echo $this->icon('redirect_3'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect_3'); ?>')
 }
 .mif-tree-redirect-protected-icon {
-	background-image:url('<?php echo $this->icon('redirect_4'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect_4'); ?>')
 }
 .mif-tree-redirect-unpublished-protected-icon {
-	background-image:url('<?php echo $this->icon('redirect_5'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect_5'); ?>')
 }
 .mif-tree-redirect-unpublished-hidden-protected {
-	background-image:url('<?php echo $this->icon('redirect_6'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('redirect_6'); ?>')
 }
 
 .mif-tree-root-icon {
-	background-image:url('<?php echo $this->icon('root'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root'); ?>')
 }
 .mif-tree-root-unpublished-icon {
-	background-image:url('<?php echo $this->icon('root_1'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root_1'); ?>')
 }
 .mif-tree-root-hidden-icon {
-	background-image:url('<?php echo $this->icon('root_2'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root_2'); ?>')
 }
 .mif-tree-root-unpublished-hidden-icon {
-	background-image:url('<?php echo $this->icon('root_3'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root_3'); ?>')
 }
 .mif-tree-root-protected-icon {
-	background-image:url('<?php echo $this->icon('root_4'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root_4'); ?>')
 }
 .mif-tree-root-unpublished-protected-icon {
-	background-image:url('<?php echo $this->icon('root_5'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root_5'); ?>')
 }
 .mif-tree-root-unpublished-hidden-protected {
-	background-image:url('<?php echo $this->icon('root_6'); ?>')
+	background-image:url('../../../../<?php echo $this->getIconSrc('root_6'); ?>')
 }
 
 .mif-tree-loader-icon {
-	background-image:url('../img/loader.gif');
+	background-image:url('loader.gif');
 }
 
 
