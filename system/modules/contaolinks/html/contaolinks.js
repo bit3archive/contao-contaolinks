@@ -51,7 +51,7 @@ function getLinkAttributes() {
 	{
 		var n = f.fileTree.getSelected();
 		if (!n) return false;
-		atts.href = n.filePath;
+		atts.href = n.path;
 	}
 	else if ($('email_tab').hasClass('current'))
 	{
@@ -82,6 +82,7 @@ function init(atts, okCallback, cancelCallback) {
 	var f = document.forms[0];
 	
 	var selectedPage = 0;
+	var selectedPath = '';
 	if (atts)
 	{
 		if (match = atts.href.match(/^\{\{link_url::(\d+)\}\}$/))
@@ -91,18 +92,17 @@ function init(atts, okCallback, cancelCallback) {
 		}
 		else if (atts.href.match(/^tl_files\//))
 		{
-			selectedFile = href;
-			// TODO f.pageTree.setSelected(href);
+			selectedPath = atts.href;
 			displayTab('file_tab','file_panel');
 		}
 		else if (atts.href.match(/^mailto:/))
 		{
-			f.email.value = href.substr(7);
+			f.email.value = atts.href.substr(7);
 			displayTab('email_tab','email_panel');
 		}
 		else if (atts.href.match(/^tel:/))
 		{
-			f.phone.value = href.substr(4);
+			f.phone.value = atts.href.substr(4);
 			displayTab('phone_tab','phone_panel');
 		}
 		else
@@ -119,58 +119,66 @@ function init(atts, okCallback, cancelCallback) {
 			new Mif.Tree.KeyNav(this);
 		},
 		types: {
-			folder:     { openIcon: 'mif-tree-page-icon',                                  closeIcon: 'mif-tree-page-icon' },
-			regular_0:  { openIcon: 'mif-tree-regular-icon',                               closeIcon: 'mif-tree-regular-icon',                               loadable: true },
-			regular_1:  { openIcon: 'mif-tree-regular-unpublished-icon',                   closeIcon: 'mif-tree-regular-unpublished-icon',                   loadable: true },
-			regular_2:  { openIcon: 'mif-tree-regular-hidden-icon',                        closeIcon: 'mif-tree-regular-hidden-icon',                        loadable: true },
-			regular_3:  { openIcon: 'mif-tree-regular-unpublished-hidden-icon',            closeIcon: 'mif-tree-regular-unpublished-hidden-icon',            loadable: true },
-			regular_4:  { openIcon: 'mif-tree-regular-protected-icon',                     closeIcon: 'mif-tree-regular-protected-icon',                     loadable: true },
-			regular_5:  { openIcon: 'mif-tree-regular-unpublished-protected-icon',         closeIcon: 'mif-tree-regular-unpublished-protected-icon',         loadable: true },
-			regular_6:  { openIcon: 'mif-tree-regular-unpublished-hidden-protected-icon',  closeIcon: 'mif-tree-regular-unpublished-hidden-protected-icon',  loadable: true },
-			forward_0:  { openIcon: 'mif-tree-forward-icon',                               closeIcon: 'mif-tree-forward-icon',                               loadable: true },
-			forward_1:  { openIcon: 'mif-tree-forward-unpublished-icon',                   closeIcon: 'mif-tree-forward-unpublished-icon',                   loadable: true },
-			forward_2:  { openIcon: 'mif-tree-forward-hidden-icon',                        closeIcon: 'mif-tree-forward-hidden-icon',                        loadable: true },
-			forward_3:  { openIcon: 'mif-tree-forward-unpublished-hidden-icon',            closeIcon: 'mif-tree-forward-unpublished-hidden-icon',            loadable: true },
-			forward_4:  { openIcon: 'mif-tree-forward-protected-icon',                     closeIcon: 'mif-tree-forward-protected-icon',                     loadable: true },
-			forward_5:  { openIcon: 'mif-tree-forward-unpublished-protected-icon',         closeIcon: 'mif-tree-forward-unpublished-protected-icon',         loadable: true },
-			forward_6:  { openIcon: 'mif-tree-forward-unpublished-hidden-protected-icon',  closeIcon: 'mif-tree-forward-unpublished-hidden-protected-icon',  loadable: true },
-			redirect_0: { openIcon: 'mif-tree-redirect-icon',                              closeIcon: 'mif-tree-redirect-icon',                              loadable: true },
-			redirect_1: { openIcon: 'mif-tree-redirect-unpublished-icon',                  closeIcon: 'mif-tree-redirect-unpublished-icon',                  loadable: true },
-			redirect_2: { openIcon: 'mif-tree-redirect-hidden-icon',                       closeIcon: 'mif-tree-redirect-hidden-icon',                       loadable: true },
-			redirect_3: { openIcon: 'mif-tree-redirect-unpublished-hidden-icon',           closeIcon: 'mif-tree-redirect-unpublished-hidden-icon',           loadable: true },
-			redirect_4: { openIcon: 'mif-tree-redirect-protected-icon',                    closeIcon: 'mif-tree-redirect-protected-icon',                    loadable: true },
-			redirect_5: { openIcon: 'mif-tree-redirect-unpublished-protected-icon',        closeIcon: 'mif-tree-redirect-unpublished-protected-icon',        loadable: true },
-			redirect_6: { openIcon: 'mif-tree-redirect-unpublished-hidden-protected-icon', closeIcon: 'mif-tree-redirect-unpublished-hidden-protected-icon', loadable: true },
-			root_0:     { openIcon: 'mif-tree-root-icon',                                  closeIcon: 'mif-tree-root-icon',                                  loadable: true },
-			root_1:     { openIcon: 'mif-tree-root-unpublished-icon',                      closeIcon: 'mif-tree-root-unpublished-icon',                      loadable: true },
-			root_2:     { openIcon: 'mif-tree-root-hidden-icon',                           closeIcon: 'mif-tree-root-hidden-icon',                           loadable: true },
-			root_3:     { openIcon: 'mif-tree-root-unpublished-hidden-icon',               closeIcon: 'mif-tree-root-unpublished-hidden-icon',               loadable: true },
-			root_4:     { openIcon: 'mif-tree-root-protected-icon',                        closeIcon: 'mif-tree-root-protected-icon',                        loadable: true },
-			root_5:     { openIcon: 'mif-tree-root-unpublished-protected-icon',            closeIcon: 'mif-tree-root-unpublished-protected-icon',            loadable: true },
-			root_6:     { openIcon: 'mif-tree-root-unpublished-hidden-protected-icon',     closeIcon: 'mif-tree-root-unpublished-hidden-protected-icon',     loadable: true },
-			loader:     { openIcon: 'mif-tree-loader-icon',                                closeIcon: 'mif-tree-loader-icon' }
+			page:   { openIcon: 'mif-tree-page-page',   closeIcon: 'mif-tree-page-page' },
+			loader: { openIcon: 'mif-tree-loader-icon', closeIcon: 'mif-tree-loader-icon' }
 		},
-		dfltType: 'regular',
+		dfltType: 'page',
 		height: 18
 	});
 
 	f.pageTree.loadOptions = function(node){
 		return {
-			url: 'system/modules/contaolinks/contaopages.php?pid=' + (node ? node.pageId : 0)
+			url: 'system/modules/contaolinks/pages.php?pid=' + (node ? node.pageId : 0)
 		};
 	};
 
 	new Request.JSON({
-		url: 'system/modules/contaolinks/contaopages.php',
+		url: 'system/modules/contaolinks/pages.php',
 		onSuccess: function(tree) {
 			f.pageTree.load({
 				json:tree
 			});
 		}
 	}).get({ pid: 0, selectedPage: selectedPage });
+
+	f.fileTree = new Mif.Tree({
+		container: $('fileTree'),
+		forest: true,
+		initialize: function(){
+			new Mif.Tree.KeyNav(this);
+		},
+		types: {
+			folder: { openIcon: 'mif-tree-folder-icon', closeIcon: 'mif-tree-folder-icon' },
+			file:   { openIcon: 'mif-tree-file-icon',   closeIcon: 'mif-tree-file-icon' },
+			loader: { openIcon: 'mif-tree-loader-icon', closeIcon: 'mif-tree-loader-icon' }
+		},
+		dfltType: 'folder',
+		height: 18
+	});
+
+	f.fileTree.addEvent('select', function(node) {
+		if (node.preview) {
+			window.Preview.show(node.path);
+		} else {
+			window.Preview.hide();
+		}
+	});
 	
-	f.onsubmit = '';
-	
+	f.fileTree.loadOptions = function(node){
+		return {
+			url: 'system/modules/contaolinks/files.php?path=' + (node ? node.path : '')
+		};
+	};
+
+	new Request.JSON({
+		url: 'system/modules/contaolinks/files.php',
+		onSuccess: function(tree) {
+			f.fileTree.load({
+				json:tree
+			});
+		}
+	}).get({ path: '', selectedPath: selectedPath });
+
 	window.update = function() {
 		okCallback(getLinkAttributes());
 	};
@@ -180,6 +188,40 @@ function init(atts, okCallback, cancelCallback) {
 };
 
 window.addEvent('domready', function() {
+	var filePreview = $('filePreview');
+	filePreview.set('morph', { link: 'cancel', duration: 'short' });
+	var filePreviewImage = $('filePreviewImage');
+	filePreviewImage.set('morph', { link: 'cancel' });
+	window.Preview = {
+		show: function(path) {
+			filePreviewImage.setStyle('opacity', 0);
+			filePreview.get('morph')
+				.start({ width: '22px', height: '22px', opacity: 1.0 })
+				.chain(function() {
+					new Request.JSON({
+						url: 'system/modules/contaolinks/files.php',
+						onSuccess: function(json) {
+							if (json && json.thumb.src) {
+								filePreview.setStyles('backgroundImage', '');
+								filePreview.get('morph')
+									.start({ width: json.thumb.width+'px', height: json.thumb.height+'px', opacity: 1.0 })
+									.chain(function() {
+										filePreviewImage.setStyle('backgroundImage', 'url(' + json.thumb.src + ')');
+										filePreviewImage.morph({ opacity: 1.0 });
+									});
+							}
+						}
+					}).get({ preview: path });
+				});
+		},
+		hide: function() {
+			filePreview.get('morph')
+				.start({ opacity: 0.0 })
+				.chain(function() { filePreview.setStyles({ width: '22px', height: '22px' }); });
+		}
+	};
+	filePreview.setStyles({ display: 'block', opacity: 0.0 });
+	
 	var wrapper = $('attributes_wrapper');
 	var edit = wrapper.getElement('div.tl_formbody_edit');
 	var fx = new Fx.Slide(edit);

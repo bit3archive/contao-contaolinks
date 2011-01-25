@@ -92,16 +92,18 @@ class ContaoPages extends ContaoLinksLib
 		$arrPages = array();
 		while ($objPage->next())
 		{
+			$strIcon = $this->getPageType($objPage);
 			$arrPage = array
 			(
 				'property' => array
 				(
 					'pageId' => $objPage->id,
 					'name' => $objPage->title,
-					'loadable' => $this->hasPageChilds($objPage->id)
+					'loadable' => $this->hasPageChilds($objPage->id),
+					'openIconUrl' => $strIcon,
+					'closeIconUrl' => $strIcon
 				),
-				'type' => $this->getPageType($objPage),
-				'state' => array()
+				'type' => 'page'
 			);
 			if ($objPage->id == $intSelected)
 			{
@@ -190,7 +192,7 @@ class ContaoPages extends ContaoLinksLib
 		}
 
 		// Get image name
-		return $objPage->type.'_'.$sub;
+		return $this->getIconSrc($sub>0 ? $objPage->type.'_'.$sub : $objPage->type);
 	}
 }
 

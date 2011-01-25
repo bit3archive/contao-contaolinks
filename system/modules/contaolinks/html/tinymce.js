@@ -10,18 +10,6 @@ var LinkDialog = {
 	init : function() {
 		var f = document.forms[0], ed = tinyMCEPopup.editor;
 
-		// Setup browse button
-		/*
-		document.getElementById('hrefbrowsercontainer').innerHTML = getBrowserHTML('hrefbrowser', 'href', 'file', 'theme_advanced_link');
-		if (isVisible('hrefbrowser'))
-			document.getElementById('href').style.width = '180px';
-		*/
-
-		// this.fillFileList('link_list', 'tinyMCELinkList');
-		this.fillRelList('rel_list');
-		this.fillTargetList('target_list');
-		this.fillClassList('class_list');
-
 		var selectedPage = 0;
 		var selectedFile = '';
 		
@@ -37,6 +25,7 @@ var LinkDialog = {
 		} else {
 			atts = null;
 		}
+		
 		init(atts, function(atts) {
 			var f = document.forms[0], ed = tinyMCEPopup.editor, e, b;
 			
@@ -62,7 +51,6 @@ var LinkDialog = {
 			if (e == null) {
 				ed.getDoc().execCommand("unlink", false, null);
 				tinyMCEPopup.execCommand("CreateLink", false, "#mce_temp_url#", {skip_undo : 1});
-				var t = this;
 	
 				tinymce.each(ed.dom.select("a"), function(n) {
 					if (ed.dom.getAttrib(n, 'href') == '#mce_temp_url#') {
@@ -71,14 +59,14 @@ var LinkDialog = {
 						ed.dom.setAttribs(e, atts);
 	
 						// PATCH: handle target="_blank"
-						t.fixIssues(ed, e, f, atts);
+						LinkDialog.fixIssues(ed, e, f, atts);
 					}
 				});
 			} else {
 				ed.dom.setAttribs(e, atts);
 	
 				// PATCH: handle target="_blank"
-				this.fixIssues(ed, e, f, atts);
+				LinkDialog.fixIssues(ed, e, f, atts);
 			}
 	
 			// Don't move caret if selection was image
@@ -93,7 +81,7 @@ var LinkDialog = {
 			tinyMCEPopup.close();
 		}, function() {
 			tinyMCEPopup.close();
-		})
+		});
 
 		TinyMCE_EditableSelects.init(); // PATCH: initialize editable select
 	},

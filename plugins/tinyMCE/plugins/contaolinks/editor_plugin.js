@@ -28,13 +28,12 @@
 (function() {
 	tinymce.create('tinymce.plugins.ContaolinksPlugin', {
 		init : function(ed, url) {
-
 			// Register contaolinks command
 			ed.addCommand('mceContaolinks', function() {
 				ed.windowManager.open({
-					file : url + '/contaolinks.php',
-					width : 686 + parseInt(ed.getLang('contaolinks.delta_width', 0)),
-					height : 400 + parseInt(ed.getLang('contaolinks.delta_height', 0)),
+					file : 'system/modules/contaolinks/links.php?tinymce',
+					width : 952,
+					height : 355,
 					inline : 1
 				}, {
 					plugin_url : url
@@ -60,9 +59,9 @@
 			// Register lightbox image command
 			ed.addCommand('mceContaobox', function() {
 				ed.windowManager.open({
-					file : url + '/contaobox.html',
-					width : 686 + parseInt(ed.getLang('contaobox.delta_width', 0)) + 232,
-					height : 400 + parseInt(ed.getLang('contaobox.delta_height', 0)),
+					file : url + 'system/modules/contaolinks/image.php?tinymce',
+					width : 686,
+					height : 400,
 					inline : 1
 				}, {
 					plugin_url : url

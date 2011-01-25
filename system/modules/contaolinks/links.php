@@ -62,18 +62,16 @@ class ContaoLinks extends ContaoLinksLib
 <head>
 	<base href="<?php echo $this->Environment->base; ?>"></base>
 	<title><?php echo $GLOBALS['TL_LANG']['contaolinks']['title']; ?></title>
-	<?php /*
-	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
-	<script type="text/javascript" src="../../utils/form_utils.js"></script>
-	<script type="text/javascript" src="../../utils/validate.js"></script>
-	*/ ?>
 	<script type="text/javascript" src="plugins/mootools/mootools-core.js"></script>
 	<script type="text/javascript" src="plugins/mootools/mootools-more.js"></script>
 	<script type="text/javascript" src="plugins/Mif.Tree/mif.tree.js"></script>
 	<script type="text/javascript" src="system/modules/contaolinks/html/contaolinks.js"></script>
-	<?php if ($this->Input->get('tinymce')): ?>
-	<script type="text/javascript" src="system/modules/contaolinks/html/contaolinks.js"></script>
+	<?php if (isset($_GET['tinymce'])): ?>
+	<script type="text/javascript" src="plugins/tinyMCE/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="plugins/tinyMCE/utils/editable_selects.js"></script>
+	<script type="text/javascript" src="plugins/tinyMCE/utils/form_utils.js"></script>
+	<script type="text/javascript" src="plugins/tinyMCE/utils/validate.js"></script>
+	<script type="text/javascript" src="system/modules/contaolinks/html/tinymce.js"></script>
 	<?php endif; ?>
 	<link type="text/css" rel="stylesheet" href="system/modules/contaolinks/html/contaolinks.css.php" />
 	<link type="text/css" rel="stylesheet" href="system/themes/<?php echo $this->getTheme(); ?>/basic.css?<?php echo VERSION; ?>.<?php echo BUILD; ?>" />
@@ -112,7 +110,7 @@ class ContaoLinks extends ContaoLinksLib
 	</div>
 	
 	<div id="main">
-		<form onsubmit="update();return false;" action="#" id="form">
+		<form onsubmit="update.delay(1);return false;" action="#" id="form">
 			<div id="tl_formbody">
 				<div id="panel_wrapper">
 					<div id="page_panel" class="panel current">
@@ -123,6 +121,7 @@ class ContaoLinks extends ContaoLinksLib
 					</div>
 					<div id="file_panel" class="panel">
 						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['file_legend'][1]; ?></h1>
+						<div id="filePreview" style="display:none;"><div id="filePreviewImage"></div></div>
 						<div class="tl_formbody_edit">
 							<div id="fileTree"></div>
 						</div>
@@ -187,6 +186,7 @@ class ContaoLinks extends ContaoLinksLib
 								</select></td>
 								<td><label for="class_list"><?php echo $GLOBALS['TL_LANG']['contaolinks']['class']; ?></label></td>
 								<td><select id="class_list" name="class_list" class="mceEditableSelect" style="width: 200px">
+									<option value=""><?php echo $GLOBALS['TL_LANG']['contaolinks']['not_set']; ?></option>
 								</select></td>
 							</tr>
 						</table>
@@ -197,7 +197,7 @@ class ContaoLinks extends ContaoLinksLib
 			<div class="tl_formbody_submit">
 				<div class="tl_submit_container">
 					<input type="submit" name="save" id="save" class="tl_submit" accesskey="s" value="<?php echo specialchars($GLOBALS['TL_LANG']['contaolinks']['save']); ?>" />
-					<input type="submit" name="cancel" id="cancel" class="tl_submit" accesskey="c" value="<?php echo specialchars($GLOBALS['TL_LANG']['contaolinks']['cancel']); ?>" />
+					<input type="button" name="cancel" id="cancel" class="tl_submit" accesskey="c" value="<?php echo specialchars($GLOBALS['TL_LANG']['contaolinks']['cancel']); ?>" onclick="window.cancel();" />
 				</div>
 			</div>
 		</form>

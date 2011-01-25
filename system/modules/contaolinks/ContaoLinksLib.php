@@ -67,6 +67,12 @@ class ContaoLinksLib extends Backend
 	{
 		return sprintf('system/themes/%s/images/%s.gif', $this->getTheme(), $strIcon);
 	}
+	
+	
+	public function extendIconSrc($strIcon)
+	{
+		return sprintf('system/themes/%s/images/%s', $this->getTheme(), $strIcon);
+	}
 
 
 	/**
