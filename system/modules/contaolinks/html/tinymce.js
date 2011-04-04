@@ -1,4 +1,3 @@
-
 var LinkDialog = {
 	preInit : function() {
 		var url;
