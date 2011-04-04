@@ -125,7 +125,11 @@ function init(atts, okCallback, cancelCallback) {
 		dfltType: 'page',
 		height: 18
 	});
-
+	f.pageTree.addEvent('toggle', function(node, state) {
+		new Request({
+			url: 'system/modules/contaolinks/pages.php'
+		}).get({ pid: node.property.pageId, state: state ? 'opened' : 'closed' });
+	});
 	f.pageTree.loadOptions = function(node){
 		return {
 			url: 'system/modules/contaolinks/pages.php?pid=' + (node ? node.pageId : 0)

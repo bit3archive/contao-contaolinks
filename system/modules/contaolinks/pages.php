@@ -1,32 +1,6 @@
 <?php
 
-/**
- * Contao Open Source CMS
- * Copyright (C) 2005-2010 Leo Feyer
- *
- * Formerly known as TYPOlight Open Source CMS.
- *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at <http://www.gnu.org/licenses/>.
- *
- * PHP version 5
- * @copyright  Leo Feyer 2005-2010
- * @author     Leo Feyer <http://www.contao.org>
- * @package    Plugins
- * @license    LGPL
- * @filesource
- */
+/* include COPYRIGHT */
 
 
 /**
@@ -59,6 +33,15 @@ class ContaoPages extends ContaoLinksLib
 			$intPid = '0';
 		}
 		
+		// Set opened/closed state
+		if ($this->Input->get('state'))
+		{
+			$session = $this->Session->getData();
+			$session['tl_article_tl_page_tree'][$intPid] = $this->Input->get('state') == 'opened' ? 1 : 0;
+			$this->Session->setData($session);
+			exit;
+		}
+		
 		$arrOpen = array();
 		$intSelected = $this->Input->get('selectedPage');
 		if ($intSelected > 0)
@@ -80,6 +63,8 @@ class ContaoPages extends ContaoLinksLib
 	 */
 	public function getPageList($intPid, $intSelected, $arrOpen)
 	{
+		$session = $this->Session->getData();
+		
 		if ($this->User->isAdmin)
 		{
 			$objPage = $this->Database->prepare("SELECT * FROM tl_page WHERE pid=? AND type IN ('regular','forward','redirect','root') ORDER BY sorting")->execute($intPid);
@@ -109,7 +94,7 @@ class ContaoPages extends ContaoLinksLib
 			{
 				$arrPage['state']['selected'] = true;
 			}
-			else if (in_array($objPage->id, $arrOpen))
+			if (in_array($objPage->id, $arrOpen) || $session['tl_article_tl_page_tree'][$objPage->id])
 			{
 				$arrPage['children'] = $this->getPageList($objPage->id, $intSelected, $arrOpen);
 				$arrPage['state']['open'] = true;
