@@ -19,7 +19,14 @@ class ContaoFiles extends ContaoLinksLib
 	{
 		parent::__construct();
 		$this->import('Input');
-		$this->import('Thumbnify');
+		if (in_array('Thumbnify', $this->Config->getActiveModules()))
+		{
+			$this->import('Thumbnify');
+		}
+		else
+		{
+			$this->Thumbnify = false;
+		}
 	}
 	
 	
@@ -32,10 +39,13 @@ class ContaoFiles extends ContaoLinksLib
 			$arrData = array();
 			if (is_file(TL_ROOT . '/' . $strPreview))
 			{
-				if ($this->Thumbnify->isThumbSupported($strPreview))
+				$objFile = new File($strPreview);
+				if ($this->Thumbnify && $this->Thumbnify->isThumbSupported($strPreview) || $objFile->isGdImage)
 				{
 					$arrData['src'] = $strPreview;
-					$arrData['thumb']['src'] = $this->Thumbnify->getThumb($strPreview, 240, 180);
+					$arrData['thumb']['src'] = $this->Thumbnify && $this->Thumbnify->isThumbSupported($strPreview)
+						? $this->Thumbnify->getThumb($strPreview, 240, 180)
+						: $this->getImage($strPreview, 240, 180);
 					
 					if ($arrData['thumb']['src'])
 					{
@@ -44,7 +54,6 @@ class ContaoFiles extends ContaoLinksLib
 						$arrData['thumb']['height'] = $objFile->height;
 					}
 					
-					$objFile = new File($strPreview);
 					if ($objFile->isGdImage)
 					{
 						$arrData['width']  = $objFile->width;
@@ -121,7 +130,7 @@ class ContaoFiles extends ContaoLinksLib
 			else
 			{
 				$objFile = new File($strRelative);
-				$blnPreview = $this->Thumbnify->isThumbSupported($strRelative);
+				$blnPreview = $this->Thumbnify && $this->Thumbnify->isThumbSupported($strRelative) || $objFile->isGdImage;
 				$strOpenIcon = $strCloseIcon = $this->extendIconSrc($objFile->icon);
 			}
 			
