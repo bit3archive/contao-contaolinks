@@ -1,3 +1,4 @@
+//js_copyright
 var Contaobox = {
 	preInit : function() {
 		var url;

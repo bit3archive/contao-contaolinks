@@ -1,3 +1,4 @@
+//js_copyright
 (function() {
 	tinymce.create('tinymce.plugins.ContaolinksPlugin', {
 		init : function(ed, url) {

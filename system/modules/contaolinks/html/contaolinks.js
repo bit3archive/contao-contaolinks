@@ -1,3 +1,4 @@
+//js_copyright
 function displayTab(tab, panel) {
 	$$('.current').removeClass('current');
 	$(tab).addClass('current');
