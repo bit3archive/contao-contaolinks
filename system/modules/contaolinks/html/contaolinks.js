@@ -27,7 +27,7 @@ function getLinkAttributes() {
 	}
 	else if ($('anchor_tab').hasClass('current'))
 	{
-		atts.href = '#' + f.anchor.value;
+		atts.href = '{{env::request}}#' + f.anchor.value;
 	}
 	else if ($('email_tab').hasClass('current'))
 	{
@@ -71,9 +71,9 @@ function init(atts, okCallback, cancelCallback) {
 			selectedPath = atts.href;
 			displayTab('file_tab','file_panel');
 		}
-		else if (atts.href.match(/^#/))
+		else if (match = atts.href.match(/^(\{\{env::request\}\})?#/))
 		{
-			f.anchor.value = atts.href.substring(1);
+			f.anchor.value = atts.href.substring(match[0].length);
 			displayTab('anchor_tab','anchor_panel');
 		}
 		else if (atts.href.match(/^mailto:/))
