@@ -17,16 +17,18 @@ $GLOBALS['TL_LANG']['contaolinks']['attributes']    = 'Eigenschaften der Verlink
 /**
  * Tabs
  */
-$GLOBALS['TL_LANG']['contaolinks']['page_legend']  = array('Seite', 'Verlinkung zu einer Contao Seite bearbeiten');
-$GLOBALS['TL_LANG']['contaolinks']['file_legend']  = array('Datei', 'Verlinkung zu einer Datei bearbeiten');
-$GLOBALS['TL_LANG']['contaolinks']['email_legend'] = array('E-Mail', 'E-Mail Adresse bearbeiten');
-$GLOBALS['TL_LANG']['contaolinks']['phone_legend'] = array('Telefon', 'Telefon oder Faxnummer bearbeiten');
-$GLOBALS['TL_LANG']['contaolinks']['url_legend']   = array('URL', 'Verlinkung zu einer externen Adresse bearbeiten');
+$GLOBALS['TL_LANG']['contaolinks']['page_legend']   = array('Seite', 'Verlinkung zu einer Contao Seite bearbeiten');
+$GLOBALS['TL_LANG']['contaolinks']['file_legend']   = array('Datei', 'Verlinkung zu einer Datei bearbeiten');
+$GLOBALS['TL_LANG']['contaolinks']['anchor_legend'] = array('Anker', 'Verlinkung zu einem Anker bearbeiten');
+$GLOBALS['TL_LANG']['contaolinks']['email_legend']  = array('E-Mail', 'E-Mail Adresse bearbeiten');
+$GLOBALS['TL_LANG']['contaolinks']['phone_legend']  = array('Telefon', 'Telefon oder Faxnummer bearbeiten');
+$GLOBALS['TL_LANG']['contaolinks']['url_legend']    = array('URL', 'Verlinkung zu einer externen Adresse bearbeiten');
 
 
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['contaolinks']['anchor'] = array('Anker', 'Geben Sie hier einen Ankernamen ohne # ein, den sie Verlinken wollen.');
 $GLOBALS['TL_LANG']['contaolinks']['email']  = array('E-Mail Adresse', 'Geben Sie hier eine E-Mail Adresse nach dem Muster <em>martin@muster.de</em> ein.');
 $GLOBALS['TL_LANG']['contaolinks']['phone']  = array('Telefon- / Faxnummer', 'Geben Sie hier eine Telefonnummer nach dem Muster <em>+49.1234-567890</em> ein.<br/>Bitte beachten Sie, das verlinken einer Telefonnummer funktioniert in der Regel nur auf Mobilen Geräten (Smartphones) korrekt. Auf PCs funktioniert die Telefonnummer nur in Verbindung mit einer installierten Telefonsoftware (VOIP / Skype).');
 $GLOBALS['TL_LANG']['contaolinks']['url']    = array('Internet Adresse', 'Geben Sie hier eine beliebige Internet Adresse nach dem Muster <em>http://www.google.de</em> ein.');

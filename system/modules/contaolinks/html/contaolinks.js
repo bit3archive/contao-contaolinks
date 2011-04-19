@@ -25,6 +25,10 @@ function getLinkAttributes() {
 		if (!n) return false;
 		atts.href = n.path;
 	}
+	else if ($('anchor_tab').hasClass('current'))
+	{
+		atts.href = '#' + f.anchor.value;
+	}
 	else if ($('email_tab').hasClass('current'))
 	{
 		atts.href = 'mailto:' + f.email.value;
@@ -66,6 +70,11 @@ function init(atts, okCallback, cancelCallback) {
 		{
 			selectedPath = atts.href;
 			displayTab('file_tab','file_panel');
+		}
+		else if (atts.href.match(/^#/))
+		{
+			f.anchor.value = atts.href.substring(1);
+			displayTab('anchor_tab','anchor_panel');
 		}
 		else if (atts.href.match(/^mailto:/))
 		{
