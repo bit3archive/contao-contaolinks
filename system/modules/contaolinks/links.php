@@ -63,6 +63,7 @@ class ContaoLinks extends ContaoLinksLib
 						<ul class="tl_level_2">
 							<li id="page_tab" class="page current"><a class="navigation page" href="javascript:displayTab('page_tab','page_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['page_legend'][0]; ?></a></li>
 							<li id="file_tab" class="file"><a class="navigation files" href="javascript:displayTab('file_tab','file_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['file_legend'][0]; ?></a></li>
+							<li id="anchor_tab" class="anchor"><a class="navigation anchor" href="javascript:displayTab('anchor_tab','anchor_panel');" onmousedown="return false;"><?php echo $GLOBALS['TL_LANG']['contaolinks']['anchor_legend'][0]; ?></a></li>
 						</ul>
 					</li>
 					<li class="tl_level_1_group">
@@ -98,6 +99,18 @@ class ContaoLinks extends ContaoLinksLib
 						<div id="filePreview" style="display:none;"><div id="filePreviewImage"></div></div>
 						<div class="tl_formbody_edit">
 							<div id="fileTree"></div>
+						</div>
+					</div>
+					<div id="anchor_panel" class="panel">
+						<h1 class="main_headline"><?php echo $GLOBALS['TL_LANG']['contaolinks']['anchor_legend'][1]; ?></h1>
+						<div class="tl_formbody_edit">
+							<fieldset class="tl_tbox">
+								<div>
+									<h3><label for="anchor"><?php echo $GLOBALS['TL_LANG']['contaolinks']['anchor'][0]; ?></label></h3>
+									<span class="anchor_prefix">#</span><input id="anchor" name="anchor" type="text" value="" style="width: 98%" />
+									<p class="tl_help tl_tip"><?php echo $GLOBALS['TL_LANG']['contaolinks']['anchor'][1]; ?></p>
+								</div>
+							</fieldset>
 						</div>
 					</div>
 					<div id="email_panel" class="panel">

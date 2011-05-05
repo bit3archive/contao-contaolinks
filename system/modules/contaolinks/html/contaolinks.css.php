@@ -39,6 +39,9 @@ body#contaolinks {
 	font-weight: bold;
 }
 
+a.navigation.anchor {
+	background-image: url(anchor.png);
+}
 a.navigation.phone {
 	background-image: url(phone.png);
 }
